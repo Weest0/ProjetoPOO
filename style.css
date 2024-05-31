@@ -1,0 +1,60 @@
+body {
+    background-color: black;
+    color: red;
+}
+
+#mangaForm {
+    margin-bottom: 20px;
+}
+
+#mangaForm input, #mangaForm select, #mangaForm button {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: black; /* Texto preto para melhor legibilidade */
+}
+
+#mangaList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.manga-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.manga-item span {
+    flex: 1;
+}
+
+.manga-item button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.manga-item button.edit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.manga-item button.delete {
+    background-color: #f44336;
+    color: white;
+}
+
+#mangaForm button[type="submit"] {
+    background-color: red; 
+    transition: background-color 0.3s;
+}
+
+#mangaForm button[type="submit"]:hover {
+    background-color: darkred; 
+}
