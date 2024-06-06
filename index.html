@@ -1,44 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Mangás</title>
-    <link rel="stylesheet" href="style/style.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="style/login.css">
 </head>
 <body>
-    
-    <header class="barra-de-navegacao">
-        <div class="lado-esquerdo">
-            <ul>
-                <li><img class="logo-imagem" src="images/logo.png"></li>
-                <li class="titulo-pagina">Minha Lista de Mangás</li>
-            </ul>
+    <div class="login-background">
+        <div class="login-container">
+            <h2>Login</h2>
+            <div id="error" class="error"></div>
+            <form id="loginForm">
+                <label for="username">Nome ou Email:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <a href="#" class="forgot-password">Esqueceu a senha?</a>
         </div>
-        <form id="mangaForm">
-            <input type="text" id="title" placeholder="Título" required>
-            <input type="text" id="author" placeholder="Autor" required>
-            <input type="text" id="genre" placeholder="Gênero" required>
-            <input type="text" id="status" placeholder="Status" required>
-            <div class="category-dropdown">
-                <select id="category" required>
-                    <option value="">Selecione uma categoria</option>
-                    <option value="ação">Ação</option>
-                    <option value="mistério">Mistério</option>
-                    <option value="aventura">Aventura</option>
-                    <option value="romance">Romance</option>
-                    <option value="comédia">Comédia</option>
-                    <option value="ficção científica">Ficção Científica</option>
-                    <option value="fantasia">Fantasia</option>
-                    <option value="história">História</option>
-                </select>
-                
-            </div>
-        
-            <button type="submit">Adicionar Mangás</button>
-        </form>
-        <ul id="mangaList"></ul>
     </div>
-    <script src="script/server.js"></script>
+    <script src="script/login.js"></script>
 </body>
 </html>
+
