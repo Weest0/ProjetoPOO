@@ -22,7 +22,9 @@
         </div>
     </header>
 
+    <div></div>
     <form id="form-manga">
+        <button type="button" class="fechar" id="fechar"><img src="images/fechar-branco.png"></button>
         <span class="elemento-form">
             <label for="campo-titulo">Titulo: </label>
             <input type="text" class="element-form" id="campo-titulo">
@@ -67,8 +69,9 @@
         </span>
         
     
-        <button type="submit" id="btn-adicionar" class="element-form">Adicionar Mangá</button>
+        <button type="submit" id="btn-adicionar" class="element-form btn-adicionar">Adicionar Mangá</button>
     </form>
+    <div class="overlay" id="overlay"></div>
     <ul id="lista-mangas"></ul>
 
     <script src="script/principal.js"></script>

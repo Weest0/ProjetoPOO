@@ -3,7 +3,7 @@ body{
     padding: 0;
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: white;
+    background-color: black;
     height: 100%;
 }
 
@@ -34,7 +34,7 @@ html{
     color: white;
 }
 
-#btn-abrir-pesquisa, #btn-abrir-form{
+#btn-abrir-pesquisa, #btn-abrir-form, .fechar{
     margin-left: 0.5rem;
     border: none;
     background-color: #866ec7;
@@ -47,7 +47,8 @@ html{
     align-items: center;
 }
 
-#btn-abrir-pesquisa:hover, #btn-abrir-form:hover, #form-manga button:hover{
+
+#btn-abrir-pesquisa:hover, #btn-abrir-form:hover, .fechar:hover{
     background-color: #9B59B6;
 }
 
@@ -65,6 +66,18 @@ html{
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
+    border-radius: 6px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 1;
+    display: none; 
 }
 
 .element-form{
@@ -83,7 +96,7 @@ html{
     border: none;
 }
 
-#form-manga button{
+.btn-adicionar{
     margin-top: 15px;
     background-color: #f2f2f2;
     border: none;
@@ -109,6 +122,7 @@ html{
     height: 35%;
     background-color: rgb(255, 255, 255, 0.5);
     border: 1px solid white;
+    border-radius: 6px;
 }
 
 .card{
@@ -131,11 +145,10 @@ html{
 
 .card-texto{
     width: 260px;
-    height: 100%;
+    height: 80%;
     margin-left: 10px;
     display: flex;
     flex-direction: column;
-
 }
 
 .card-texto label{
@@ -143,6 +156,10 @@ html{
 }
 
 .card-imagem{
+    height: 100%;
+}
+
+.card-lado-direito{
     height: 100%;
 }
 
@@ -157,4 +174,38 @@ html{
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     justify-items: center;
+}
+
+.botao-acao{
+    background-color: #866ec7;
+    color: white;
+    margin-left: 10px;
+    border: none;
+    width: 90px;
+    height: 25px;
+    border-radius: 6px;
+}
+
+.card-botao{
+    width: 260px;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-left: 10px;
+}
+
+.label-autor, .label-capitulo, .label-genero-categoria, .label-status{
+    font-size: 13px;
+}
+
+.label-titulo{
+    font-size: 15px;
+}
+
+.label-status{
+    width: 80px;
+    border-radius: 6px;
+    text-align: center;
 }
