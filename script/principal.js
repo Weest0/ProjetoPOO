@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
     const listaMangas = document.getElementById('lista-mangas');
     const overlay = document.getElementById('overlay');
     const botaoFecharFormulario = document.getElementById('fechar');
+    const botaoAdicionarManga = document.getElementById('btn-adicionar');
     let vetorMangas = [];
     let emQualEsta = null;
 
@@ -46,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
         document.getElementById('genero').value = manga.genero;
         document.getElementById('status').value = manga.status;
         document.getElementById('categoria').value = manga.categoria;
+        botaoFecharFormulario.style.display = 'none';
+        botaoAdicionarManga.textContent = 'Atualizar Mangá';
 
         emQualEsta = index;
         formManga.style.display = 'flex';
@@ -163,6 +166,9 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
     const botaoAbrirFormulario = document.getElementById('btn-abrir-form');
     let abrirFormularioAux = true;
     botaoAbrirFormulario.addEventListener('click', () => {
+        formManga.reset();
+        botaoFecharFormulario.style.display = 'flex';
+        botaoAdicionarManga.textContent = 'Adicionar Mangá';
         (abrirFormularioAux) ? overlay.style.display = 'flex' : overlay.style.display = 'none';
         (abrirFormularioAux) ? formManga.style.display = 'flex' : formManga.style.display = 'none';
         abrirFormularioAux =! abrirFormularioAux;

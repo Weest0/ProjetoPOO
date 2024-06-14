@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: rgb(37, 37, 37);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,23 +23,32 @@ body {
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
+    background: black;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    width: 300px;
+    width: 700px;
+    height: 300px;
+    display: flex;
+    align-items: center;
     text-align: center;
+    padding: 25px;
+}
+
+img{
+    width: 250px;
+    height: 250px;
+    margin-right: 35px;
 }
 
 .login-container h2 {
-    margin-bottom: 20px;
-    color: black;
+    margin-bottom: 10px;
+    color: white;
 }
 
 .login-container label {
     display: block;
     margin-bottom: 5px;
-    color: black;
+    color: white;
     text-align: left;
 }
 
@@ -47,7 +56,8 @@ body {
     width: 90%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid white;
+    background-color: rgb(255, 255, 255, 0.5);
     border-radius: 5px;
 }
 
@@ -82,4 +92,13 @@ body {
 .error {
     color: red;
     margin-bottom: 10px;
+}
+
+.area-credenciais, .area-imagem{
+    width: 350px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
