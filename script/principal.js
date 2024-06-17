@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
 
     class Manga {
         constructor(titulo, autor, ultimoCapituloLido, linkImagem, genero, status, categoria) {
-            //this.id = Date.now();
             this.titulo = titulo;
             this.autor = autor;
             this.ultimoCapituloLido = ultimoCapituloLido;
@@ -17,7 +16,63 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
             this.genero = genero;
             this.status = status;
             this.categoria = categoria;
-        };
+        }
+
+        getTitulo() {
+            return this.titulo;
+        }
+    
+        setTitulo(novoTitulo) {
+            this.titulo = novoTitulo;
+        }
+    
+        getAutor() {
+            return this.autor;
+        }
+    
+        setAutor(novoAutor) {
+            this.autor = novoAutor;
+        }
+    
+        getUltimoCapituloLido() {
+            return this.ultimoCapituloLido;
+        }
+    
+        setUltimoCapituloLido(novoUltimoCapituloLido) {
+            this.ultimoCapituloLido = novoUltimoCapituloLido;
+        }
+    
+        getLinkImagem() {
+            return this.linkImagem;
+        }
+    
+        setLinkImagem(novoLinkImagem) {
+            this.linkImagem = novoLinkImagem;
+        }
+    
+        getGenero() {
+            return this.genero;
+        }
+    
+        setGenero(novoGenero) {
+            this.genero = novoGenero;
+        }
+    
+        getStatus() {
+            return this.status;
+        }
+    
+        setStatus(novoStatus) {
+            this.status = novoStatus;
+        }
+    
+        getCategoria() {
+            return this.categoria;
+        }
+    
+        setCategoria(novaCategoria) {
+            this.categoria = novaCategoria;
+        }
         
     };
 
