@@ -1,3 +1,26 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import chamarPopUpAviso from "./erroPopUp.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCHxgtdoV8OiU0zjdNfd_M3hLpuWd1JHZU",
+  authDomain: "projetopoo-a79d3.firebaseapp.com",
+  projectId: "projetopoo-a79d3",
+  storageBucket: "projetopoo-a79d3.appspot.com",
+  messagingSenderId: "612931106877",
+  appId: "1:612931106877:web:c3ccd33cf7c8aa2219d254",
+  measurementId: "G-9W98W96G4L"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para deixar um pouco mais fluido.
     const formManga = document.getElementById('form-manga');
     const listaMangas = document.getElementById('lista-mangas');

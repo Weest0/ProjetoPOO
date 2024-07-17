@@ -9,17 +9,20 @@ body {
 }
 
 .login-background {
-    position: absolute;
-    top: 0;
-    left: 0;
+    border: 5px solid red;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url('images/background.jpg');
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
     background-size: cover;
     background-position: center;
+    z-index: 0;
 }
 
 .login-container {
@@ -34,7 +37,7 @@ body {
     padding: 25px;
 }
 
-img{
+.area-imagem img{
     width: 250px;
     height: 250px;
     margin-right: 35px;
@@ -101,4 +104,56 @@ img{
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+.pop-up-aviso{
+    background-color: rgb(42, 146, 194);
+    position: absolute;
+    top: 9%;
+    z-index: 1;
+    width: 300px;
+    height: 40px;
+    border-radius: 8px;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    animation: aviso 3s;
+}
+
+#fechar-pop-up{
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: auto;
+}
+
+.texto-aviso-span{
+    width: 90%;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.botao-aviso-span{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+@keyframes aviso {
+    from{
+        top: -8%;
+    }
+    to {
+        top: 9%;
+    }
 }
