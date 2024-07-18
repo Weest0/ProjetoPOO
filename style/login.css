@@ -26,21 +26,14 @@ body {
 }
 
 .login-container {
-    background: black;
+    background: #9400D3;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    width: 700px;
-    height: 300px;
+    width: 725px;
+    height: 425px;
     display: flex;
     align-items: center;
     text-align: center;
-    padding: 25px;
-}
-
-.area-imagem img{
-    width: 250px;
-    height: 250px;
-    margin-right: 35px;
 }
 
 .login-container h2 {
@@ -56,35 +49,42 @@ body {
 }
 
 .login-container input {
-    width: 90%;
+    color: white;
+    width: 315px;
+    height: 20px;
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid white;
-    background-color: rgb(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    border: none;
+    background-color: rgb(27, 27, 27);
     border-radius: 5px;
+    outline: none;
 }
 
-.login-container button {
-    width: 90%;
-    padding: 10px;
-    background-color: purple;
+.login-container input::placeholder{
+    color: white;
+}
+
+.botao-entrar {
+    width: 130px;
+    height: 45px;
+    background-color: #9400D3;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 15px;
 }
 
-.login-container button:hover {
+.botao-entrar:hover {
     background-color: white;
-    color: purple;
+    color: #9400D3;
 }
 
 .forgot-password {
     display: block;
     margin-top: 10px;
-    color: purple;
+    color: #9400D3;
     text-decoration: none;
 }
 
@@ -97,13 +97,55 @@ body {
     margin-bottom: 10px;
 }
 
-.area-credenciais, .area-imagem{
-    width: 350px;
+.area-entrar, .principal-entrar{
+    width: 60%;
     height: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    transition: width 2s;
+    background-color: black;
+    border-radius: 0 10px 10px 0;
+}
+
+.principal-entrar h2{
+    color: #9400D3;
+}
+
+.area-cadastro{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px 0 0 10px;
+    transition: width 2s;
+    background-color: #9400D3;
+}
+
+.botao-abrir-cadastro{
+    width: 130px;
+    height: 45px;
+    border-radius: 20px;
+    border: 3px solid white;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.botao-abrir-cadastro:hover{
+    background-color: white;
+    color: #9400D3;
+}
+
+.secundario-entrar{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
 }
 
 .pop-up-aviso{

@@ -34,11 +34,45 @@ document.addEventListener('DOMContentLoaded', () => {
     //DOM
     const email = document.getElementById('email');
     const senha = document.getElementById('senha');
+    const botaoAbrirCadastro = document.getElementById('botao-abrir-cadastro');
+    const botaoAbrirEntrar = document.getElementById('botao-abrir-entrar');
+    const areaPrincipalEntrar = document.getElementById('principal-entrar');
+    const areaSecundariaEntrar = document.getElementById('secundario-entrar');
+    const areaEntrar = document.getElementById('area-entrar');
+    const areaCadastro = document.getElementById('area-cadastro');
+
+    botaoAbrirCadastro.addEventListener('click', () => {
+        areaPrincipalEntrar.style.display = 'none';
+        areaSecundariaEntrar.style.display = 'flex';
+        areaEntrar.style.backgroundColor = '#9400D3';
+        areaCadastro.style.backgroundColor = 'black';
+        areaEntrar.style.width = '40%';
+        areaCadastro.style.width = '60%';
+    });
+
+    botaoAbrirEntrar.addEventListener('click', () =>{
+        areaPrincipalEntrar.style.display = 'flex';
+        areaSecundariaEntrar.style.display = 'none';
+        areaCadastro.style.backgroundColor = '#9400D3';
+        areaEntrar.style.backgroundColor = 'black';
+        areaEntrar.style.width = '60%';
+        areaCadastro.style.width = '40%';
+    });
 
     function verificarSeCredenciaisSaoValidas(){
         let senhaCaracteresValidos = caracteresParaSenha.test(senha.value);
         let emailCaracteresValidos = caracteresParaEmail.test(email.value);
         return(senha.value.length >= 6 && senha.value.length <= 10 && senhaCaracteresValidos && emailCaracteresValidos);
+    }
+
+    function verificarSeEmailJaExiste(){    
+        const arrayUsuario = fetchSignInMethodsForEmail(auth, email.value);
+        if(arrayUsuario.length > 0){ //Se o array não estiver vazio o email está registrado.
+            return true; // Email já resgistrado.
+        } else {
+            return false;
+        } 
+        
     }
     
     function validarCadastro(){

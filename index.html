@@ -17,20 +17,29 @@
     </div>
     <div class="login-background">
         <div class="login-container">
-            <div class="area-imagem">
-                <img src="images/logo-v2.png">
+            <div class="area-cadastro" id="area-cadastro">
+                <!-- <img src="images/logo-v2.png"> -->
+                <button class="botao-abrir-cadastro" id="botao-abrir-cadastro">Cadastrar</button>
             </div>
-            <div class="area-credenciais">
-                <h2>Bem Vindo, acesse ou cadastre-se.</h2>
-                <div id="error" class="error"></div>
-                <form id="loginForm">
-                    <label for="email">Nome ou Email:</label>
-                    <input type="email" id="email" name="email" required>
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" required>
-                    <button type="submit">Entrar</button>
-                </form>
-                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            <div class="area-entrar" id="area-entrar">
+                <div class="principal-entrar" id="principal-entrar">
+                    <h2>Bem-vindo de volta!</h2> 
+                    <label> Acesse sua conta</label>
+                    <div id="error" class="error"></div>
+                    <form id="loginForm">
+                        <!-- <label for="email">Email:</label> -->
+                        <input type="email" id="email" name="email" required placeholder="Email">
+                        <!-- <label for="senha">Senha:</label> -->
+                        <input type="password" id="senha" name="senha" required placeholder="Senha">
+                        <button type="submit" class="botao-entrar">Entrar</button>
+                    </form>
+                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                </div>
+                <div class="secundario-entrar" id="secundario-entrar">
+                    <h2>Bem-vindo de volta!</h2>
+                    <label>Acesse sua conta agora mesmo.</label>
+                    <button class="botao-abrir-cadastro" id="botao-abrir-entrar">Entrar</button>
+                </div>
             </div>
         </div>
     </div>
