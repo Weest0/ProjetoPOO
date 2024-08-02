@@ -3,11 +3,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.2/firebase
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 import chamarPopUpAviso from "./erroPopUp.js";
 // Importações direto do firebase, assim como é usado na documentação
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCHxgtdoV8OiU0zjdNfd_M3hLpuWd1JHZU",
   authDomain: "projetopoo-a79d3.firebaseapp.com",
@@ -28,32 +24,44 @@ const caracteresParaEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const formularioRegistro = document.getElementById('registerForm');
     const loginForm = document.getElementById('loginForm');
     const errorElement = document.getElementById('error');
+    const errorElementCadastro = document.getElementById('error-cadastro');
 
-    //DOM
+    //Aqui estão os elementos do html (index.html)
+    const emaiCadastro = document.getElementById('email-cadastro');
+    const senhaCadastro = document.getElementById('senha-cadastro');
     const email = document.getElementById('email');
     const senha = document.getElementById('senha');
     const botaoAbrirCadastro = document.getElementById('botao-abrir-cadastro');
     const botaoAbrirEntrar = document.getElementById('botao-abrir-entrar');
     const areaPrincipalEntrar = document.getElementById('principal-entrar');
     const areaSecundariaEntrar = document.getElementById('secundario-entrar');
+    const areaPrincipalCadastro = document.getElementById('principal-cadastro');
+    const areaSecundariaCadastro = document.getElementById('secundario-cadastro')
     const areaEntrar = document.getElementById('area-entrar');
     const areaCadastro = document.getElementById('area-cadastro');
 
+    //evento para frontend/style
     botaoAbrirCadastro.addEventListener('click', () => {
+        areaPrincipalCadastro.style.display = 'flex';
+        areaSecundariaCadastro.style.display = 'none';
         areaPrincipalEntrar.style.display = 'none';
         areaSecundariaEntrar.style.display = 'flex';
-        areaEntrar.style.backgroundColor = '#9400D3';
+        areaEntrar.style.backgroundColor = '#780662';
         areaCadastro.style.backgroundColor = 'black';
         areaEntrar.style.width = '40%';
         areaCadastro.style.width = '60%';
     });
 
+    //evento para a mesma coisa do anterior
     botaoAbrirEntrar.addEventListener('click', () =>{
+        areaPrincipalCadastro.style.display = 'none';
+        areaSecundariaCadastro.style.display = 'flex';
         areaPrincipalEntrar.style.display = 'flex';
         areaSecundariaEntrar.style.display = 'none';
-        areaCadastro.style.backgroundColor = '#9400D3';
+        areaCadastro.style.backgroundColor = '#780662';
         areaEntrar.style.backgroundColor = 'black';
         areaEntrar.style.width = '60%';
         areaCadastro.style.width = '40%';
@@ -65,34 +73,63 @@ document.addEventListener('DOMContentLoaded', () => {
         return(senha.value.length >= 6 && senha.value.length <= 10 && senhaCaracteresValidos && emailCaracteresValidos);
     }
 
-    function verificarSeEmailJaExiste(){    
-        const arrayUsuario = fetchSignInMethodsForEmail(auth, email.value);
-        if(arrayUsuario.length > 0){ //Se o array não estiver vazio o email está registrado.
-            return true; // Email já resgistrado.
-        } else {
-            return false;
-        } 
-        
+    async function verificarSeEmailJaExiste(){    
+        const arrayUsuario = await fetchSignInMethodsForEmail(auth, email.value); // Retorna dados que não da pra ler, mas sempre retorna se tiver um email correspondente.
+        return arrayUsuario.length > 0
     }
     
-    function validarCadastro(){
-        if (verificarSeCredenciaisSaoValidas()) {
-            errorElement.textContent = '';
-            window.location.href = 'principal.html';  
-            
-        } else {
-            throw new Error('Precisa ter um email valido e uma senha valida.');
+    async function validarCadastro(){
+        if(!verificarSeCredenciaisSaoValidas()) {
+            throw new Error('Precisa ter um email valido e uma senha valida.');    
+        }
+
+        const emailExiste = await verificarSeEmailJaExiste();
+        if(emailExiste){
+            throw new Error('Email já resgistrado.');
+        }
+
+        try{
+            await createUserWithEmailAndPassword(auth, email.value, senha.value);
+            window.location.href = "principal.html";
+        } catch(error){
+            throw new Error('Erro ao criar usuário. ', error.message);
         }
     }
 
-    loginForm.addEventListener('submit', (event) => {
+    async function realizarLogin(){
+        try{
+            await signInWithEmailAndPassword(auth, email.value, senha.value);
+            window.location.href = "principal.html";
+        } catch(error){
+            throw new Error('Erro ao realizar login. ', error.message);
+        }
+    }
+
+    formularioRegistro.addEventListener('submit', async (event) => {
         event.preventDefault();
         try{
-            validarCadastro();
-        } catch(e){
-            console.error('Erro: ', e.message);
-            errorElement.textContent = 'A senha deve ter de 6 a 10 caracteres e conter algum caracter especial.';
-            chamarPopUpAviso('Verifique email e senha, e tente novamente', 'red');
+            await validarCadastro(emaiCadastro.value, senhaCadastro.value);
+        } catch(error){
+            console.error('Erro: ', error.message);
+            errorElementCadastro.textContent = error.message;
+            chamarPopUpAviso(error.message, 'red');
+        }
+    });
+
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        try{
+            await realizarLogin(email.value, senha.value);
+        } catch(error){
+            console.error('Erro: ', error.message);
+            errorElement.textContent = error.message;
+            chamarPopUpAviso(error.message, 'red');
+        }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+        if(user){
+            window.location.href = 'principal.html';
         }
     });
 });
