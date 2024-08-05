@@ -67,38 +67,38 @@ document.addEventListener('DOMContentLoaded', () => {
         areaCadastro.style.width = '40%';
     });
 
-    function verificarSeCredenciaisSaoValidas(){
-        let senhaCaracteresValidos = caracteresParaSenha.test(senha.value);
-        let emailCaracteresValidos = caracteresParaEmail.test(email.value);
-        return(senha.value.length >= 6 && senha.value.length <= 10 && senhaCaracteresValidos && emailCaracteresValidos);
+    function verificarSeCredenciaisSaoValidas(email, senha){
+        let senhaCaracteresValidos = caracteresParaSenha.test(senha);
+        let emailCaracteresValidos = caracteresParaEmail.test(email);
+        return(senha.length >= 6 && senha.length <= 10 && senhaCaracteresValidos && emailCaracteresValidos);
     }
 
-    async function verificarSeEmailJaExiste(){    
-        const arrayUsuario = await fetchSignInMethodsForEmail(auth, email.value); // Retorna dados que não da pra ler, mas sempre retorna se tiver um email correspondente.
+    async function verificarSeEmailJaExiste(email){    
+        const arrayUsuario = await fetchSignInMethodsForEmail(auth, email); // Retorna dados que não da pra ler, mas sempre retorna se tiver um email correspondente.
         return arrayUsuario.length > 0
     }
     
-    async function validarCadastro(){
-        if(!verificarSeCredenciaisSaoValidas()) {
+    async function validarCadastro(email, senha){
+        if(!verificarSeCredenciaisSaoValidas(email, senha)) {
             throw new Error('Precisa ter um email valido e uma senha valida.');    
         }
 
-        const emailExiste = await verificarSeEmailJaExiste();
+        const emailExiste = await verificarSeEmailJaExiste(email);
         if(emailExiste){
             throw new Error('Email já resgistrado.');
         }
 
         try{
-            await createUserWithEmailAndPassword(auth, email.value, senha.value);
+            await createUserWithEmailAndPassword(auth, email, senha);
             window.location.href = "principal.html";
         } catch(error){
             throw new Error('Erro ao criar usuário. ', error.message);
         }
     }
 
-    async function realizarLogin(){
+    async function realizarLogin(email, senha){
         try{
-            await signInWithEmailAndPassword(auth, email.value, senha.value);
+            await signInWithEmailAndPassword(auth, email, senha);
             window.location.href = "principal.html";
         } catch(error){
             throw new Error('Erro ao realizar login. ', error.message);
@@ -127,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    onAuthStateChanged(auth, (user) => {
+    /* onAuthStateChanged(auth, (user) => {
         if(user){
             window.location.href = 'principal.html';
         }
-    });
+    }); */
 });
