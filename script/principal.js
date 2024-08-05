@@ -30,20 +30,27 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
     const botaoFecharFormulario = document.getElementById('fechar');
     const botaoFecharAtualizarFormulario = document.getElementById('fechar-atualizar-form');
     const botaoAdicionarManga = document.getElementById('btn-adicionar');
+    const botaoAbrirMenu = document.getElementById('btn-abrir-menu');
     const botaoSair = document.getElementById('btn-sair-usuario');
     const nomeUsuario = document.getElementById('nome-usuario');
     const imgLoading = document.getElementById('carregamento');
     const textoBotao = document.getElementById('texto-botao');
+    const menuLateral = document.getElementById('menu-lateral');
+    const barraNavegacao = document.getElementById('barra-de-navegacao');
+    const imagemUsuario = document.getElementById('imagem-usuario');
     let usuarioGlobal;
     let aux = true;
+    let auxMenu = true;
 
-    //Parte de atualizar o mangá
-
+    //Aqui está cuidando de tudo relacionado a usuario
     onAuthStateChanged(auth, (user) => {
         if (user) {
             usuarioGlobal = user;
             exibirListaMangas(user.uid);
-            nomeUsuario.textContent = ' Bem-vindo, ' + user.email;
+            const displayName = user.displayName || user.email;
+            nomeUsuario.textContent = ' Bem-vindo, ' + displayName;
+            const photoURL = user.photoURL || '../images/usuario.png';
+            imagemUsuario.src = photoURL;
         } else {
             nomeUsuario.textContent = "Usuário não autenticado";
         }
@@ -129,6 +136,26 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
         window.location.href = 'index.html';
     });
 
+    botaoAbrirMenu.addEventListener('click', () => {
+        if(auxMenu){
+            menuLateral.style.display = 'flex';
+            menuLateral.style.left = '79%';
+            barraNavegacao.style.width = '79%';
+            listaMangas.style.width = '79%';
+        } else {
+            //menuLateral.style.animation = 'menu2 3s';
+            menuLateral.style.left = '100%';
+            barraNavegacao.style.width = '100%';
+            listaMangas.style.width = '100%'
+            setTimeout(()=>{
+                menuLateral.style.display = 'none';
+            }, 3000);
+            
+        }
+        auxMenu =!auxMenu;
+        
+    });
+
     function configurarBotao(button, nome){
         button.value = nome;
         button.type = 'button';
@@ -141,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
         ultimoCapituloLido.className = 'label-capitulo';
         generoECategoria.className = 'label-genero-categoria';
         status.className = 'label-status';
-    }
+    };
 
     
     async function exibirListaMangas(userId){
@@ -174,8 +201,37 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
                 const labelUltimoCapLido = document.createElement('label');
                 const labelGeneroECategoria = document.createElement('label');
                 const labelStatus = document.createElement('label');
-    
+
+                const botaoDeletar = document.createElement('input');
                 const botaoEditar = document.createElement('input');
+    
+                configurarBotao(botaoEditar, 'Editar');
+                configurarBotao(botaoDeletar, 'Deletar'); 
+    
+                (manga.status === 'Lendo') ? labelStatus.style.backgroundColor = 'green' : labelStatus.style.backgroundColor = 'red'; 
+    
+                labelTitulo.innerHTML = `Titulo: ${manga.titulo}`;
+                (manga.autor === '') ? labelAutor.innerHTML = 'Autor: Desconhecido' : labelAutor.innerHTML = `Autor: ${manga.autor}`;
+                labelUltimoCapLido.innerHTML = `Ultimo capitulo lido: ${manga.ultimoCapituloLido}`;
+                labelGeneroECategoria.innerHTML = `${manga.genero} · ${manga.categoria}`;
+                labelStatus.innerHTML = `${manga.status}`;
+                (manga.linkImagem === '') ? imagem.src = '' : imagem.src = manga.linkImagem;
+    
+                cardTexto.appendChild(labelTitulo);
+                cardTexto.appendChild(labelAutor);
+                cardTexto.appendChild(labelGeneroECategoria);
+                cardTexto.appendChild(labelUltimoCapLido);
+                cardTexto.appendChild(labelStatus);
+                cardLadoDireito.appendChild(cardTexto);
+                cardLadoDireito.appendChild(cardBotao);
+                
+                cardImagem.appendChild(imagem);
+                cardBotao.appendChild(botaoEditar);
+                cardBotao.appendChild(botaoDeletar); 
+                card.appendChild(cardImagem);
+                card.appendChild(cardLadoDireito);
+                listaMangas.appendChild(card);
+
                 botaoEditar.addEventListener('click', () => {
                     const novoCampoTitulo = document.getElementById('novo-campo-titulo');
                     const novoCampoAutor = document.getElementById('novo-campo-autor');
@@ -232,12 +288,11 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
                     
                 });
 
-                const botaoDeletar = document.createElement('input');
                 botaoDeletar.addEventListener('click', async () => {
                     try{
                         const caminho = doc(db, 'usuarios', userId, 'mangas', documento.id);
                         await deleteDoc(caminho);
-                        chamarPopUpAviso('Excluido', 'yellow');
+                        chamarPopUpAviso('Excluido', 'green');
                         exibirListaMangas(userId);
                     } catch(error){
                         console.error('Error', error.message);
@@ -245,33 +300,6 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
                     }
 
                 });
-    
-                configurarBotao(botaoEditar, 'Editar');
-                configurarBotao(botaoDeletar, 'Deletar'); 
-    
-                (manga.status === 'Lendo') ? labelStatus.style.backgroundColor = 'green' : labelStatus.style.backgroundColor = 'red'; 
-    
-                labelTitulo.innerHTML = `Titulo: ${manga.titulo}`;
-                (manga.autor === '') ? labelAutor.innerHTML = 'Autor: Desconhecido' : labelAutor.innerHTML = `Autor: ${manga.autor}`;
-                labelUltimoCapLido.innerHTML = `Ultimo capitulo lido: ${manga.ultimoCapituloLido}`;
-                labelGeneroECategoria.innerHTML = `${manga.genero} · ${manga.categoria}`;
-                labelStatus.innerHTML = `${manga.status}`;
-                (manga.linkImagem === '') ? imagem.src = '' : imagem.src = manga.linkImagem;
-    
-                cardTexto.appendChild(labelTitulo);
-                cardTexto.appendChild(labelAutor);
-                cardTexto.appendChild(labelGeneroECategoria);
-                cardTexto.appendChild(labelUltimoCapLido);
-                cardTexto.appendChild(labelStatus);
-                cardLadoDireito.appendChild(cardTexto);
-                cardLadoDireito.appendChild(cardBotao);
-                
-                cardImagem.appendChild(imagem);
-                cardBotao.appendChild(botaoEditar);
-                cardBotao.appendChild(botaoDeletar); 
-                card.appendChild(cardImagem);
-                card.appendChild(cardLadoDireito);
-                listaMangas.appendChild(card);
                 
                 card.className = 'card';
                 imagem.className = 'imagem';
@@ -282,21 +310,15 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
                 botaoEditar.className = 'botao-acao';
                 cardBotao.className = 'card-botao';
                 classesTexto(labelTitulo, labelAutor, labelUltimoCapLido, labelGeneroECategoria, labelStatus);
+                
             });
         });
         
     };
 
+
     formManga.addEventListener('submit', async (event) => {
         event.preventDefault();
-
-        setTimeout(() => {
-            textoBotao.display = 'none';
-            imgLoading.display = 'block';
-        }, 3000);
-
-        textoBotao.display = 'block';
-        imgLoading.display = 'none';
 
         if(usuarioGlobal){
             const campoTitulo = document.getElementById('campo-titulo');
