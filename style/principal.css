@@ -40,7 +40,7 @@ html{
     align-items: center;
 }
 
-#btn-abrir-pesquisa, #btn-abrir-form, .fechar{
+#btn-abrir-pesquisa, #btn-abrir-form, #btn-sair-usuario,.fechar{
     margin-left: 0.5rem;
     border: none;
     background-color: purple;
@@ -58,7 +58,7 @@ html{
     background-color: #9B59B6;
 }
 
-#form-manga{
+#form-manga, #form-atualizar-manga{
     padding: 15px;
     display: none;
     background-color: #0f0f0f;
@@ -225,4 +225,82 @@ html{
 .titulo-pagina{
     font-size: 18px;
     font-weight: bold;
+}
+
+#nome-usuario{
+    margin-left: 15px;
+}
+
+.pop-up-aviso{
+    background-color: rgb(42, 146, 194);
+    position: absolute;
+    top: 9%;
+    z-index: 1;
+    width: 300px;
+    height: 40px;
+    border-radius: 8px;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    animation: aviso 3s;
+}
+
+#fechar-pop-up{
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: auto;
+}
+
+.texto-aviso-span{
+    width: 90%;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.botao-aviso-span{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+@keyframes aviso {
+    from{
+        top: -8%;
+    }
+    to {
+        top: 9%;
+    }
+}
+
+#texto-botao{
+    display: block;
+}
+
+#carregamento{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    animation: carregamento 1s linear infinite;
+}
+
+@keyframes carregamento {
+    from{
+        rotate: 0deg;
+    } to {
+        rotate: 360deg;
+    }
 }

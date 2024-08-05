@@ -7,22 +7,81 @@
     <link rel="stylesheet" href="style/principal.css">
 </head>
 <body>
+    <div class="pop-up-aviso" id="pop-up-aviso">
+        <span class="texto-aviso-span">
+            <label id="texto-aviso-label"></label>
+        </span>
+        <span class="botao-aviso-span">
+            <button id="fechar-pop-up"><img src="images/fechar-branco.png"></button>
+        </span>
+    </div>
     <header class="barra-de-navegacao">
         <div class="lado-esquerdo">
             <ul>
                 <li><img class="logo-imagem" src="images/logo-v2.png"></li>
                 <li class="titulo-pagina">Minha Lista de Mangás</li>
+                <li><label id="nome-usuario"></label></li>
             </ul>
         </div>
         <div class="lado-direito">
             <ul>
                 <li><button id="btn-abrir-pesquisa"><img src="images/filtro.png"></button></li>
                 <li><button id="btn-abrir-form"><img src="images/adicionar-branco.png"></button></li>
+                <li><button id="btn-sair-usuario"><img src="images/sair-branco.png"></button></li>
             </ul>
         </div>
     </header>
 
-    <div></div>
+
+    <form id="form-atualizar-manga">
+        <button type="button" class="fechar" id="fechar-atualizar-form"><img src="images/fechar-branco.png"></button>
+        <span class="elemento-form">
+            <label for="novo-campo-titulo">Titulo: </label>
+            <input type="text" class="element-form" id="novo-campo-titulo">
+        </span>
+        <span class="elemento-form">
+            <label for="novo-campo-autor">Autor: </label>
+            <input type="text" class="element-form" id="novo-campo-autor">
+        </span>
+        <span class="elemento-form">
+            <label for="novo-campo-por-ultimo">Ultimo capitulo lido: </label>
+            <input type="text" class="element-form" id="novo-campo-por-ultimo">
+        </span>
+        <span class="elemento-form">
+            <label for="novo-campo-imagem">Link da imagem: </label>
+            <input type="text" class="element-form" id="novo-campo-imagem">
+        </span>
+        
+        <span class="elemento-form-select">
+            <select id="nova-categoria" class="element-form">
+                <option>Selecione uma categoria</option>
+                <option>WebToon</option>
+                <option>Mangá</option>
+                <option>Manhwa (Coreano)</option>
+                <option>Manhua (Chinês)</option>
+            </select>
+            <select id="novo-status" class="element-form">
+                <option>Selecione o status</option>
+                <option>Lendo</option>
+                <option>Terminado</option>
+            </select>
+            <select id="novo-genero" class="element-form">
+                <option>Selecione um genero</option>
+                <option>Ação</option>
+                <option>Mistério</option>
+                <option>Aventura</option>
+                <option>Romance</option>
+                <option>Comédia</option>
+                <option>Ficção Científica</option>
+                <option>Fantasia</option>
+                <option>História</option>
+            </select>
+        </span>
+        
+    
+        <button type="submit" id="btn-adicionar" class="element-form btn-adicionar">Atualizar Mangá</button>
+    </form>
+
     <form id="form-manga">
         <button type="button" class="fechar" id="fechar"><img src="images/fechar-branco.png"></button>
         <span class="elemento-form">
@@ -69,7 +128,10 @@
         </span>
         
     
-        <button type="submit" id="btn-adicionar" class="element-form btn-adicionar">Adicionar Mangá</button>
+        <button type="submit" id="btn-adicionar" class="element-form btn-adicionar">
+            <label id="texto-botao">Adicionar Mangá</label>
+            <img src="images/carregamento.png" id="carregamento">
+        </button>
     </form>
     <div class="overlay" id="overlay"></div>
     <ul id="lista-mangas"></ul>
