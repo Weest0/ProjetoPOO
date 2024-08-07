@@ -27,7 +27,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #d1b0ff; /* Roxo claro */
+    color: #9B59B6; /* Roxo claro */
     text-decoration: none;
     padding: 10px 20px;
     display: inline-block;
@@ -35,7 +35,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #780662; /* Roxo mais escuro */
+    background-color: #9B59B6; /* Roxo mais escuro */
     color: #fff; /* Texto branco */
     border-radius: 5px;
 }
@@ -54,7 +54,7 @@ main {
 }
 
 h1 {
-    color: #d1b0ff; /* Roxo claro */
+    color: #9B59B6; /* Roxo claro */
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 20px;
@@ -71,7 +71,7 @@ footer {
 }
 
 button {
-    background-color: #780662; /* Roxo escuro */
+    background-color: #9B59B6; /* Roxo escuro */
     color: #ffffff; /* Texto branco */
     border: none;
     padding: 10px 20px;

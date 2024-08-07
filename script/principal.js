@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-analytics.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 import { getFirestore, collection, getDocs, addDoc, updateDoc, doc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 import chamarPopUpAviso from "./erroPopUp.js";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -25,34 +25,62 @@ const db = getFirestore(app);
 document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para deixar um pouco mais fluido.
     const formManga = document.getElementById('form-manga');
     const formAtualizarManga = document.getElementById('form-atualizar-manga');
+    const formEditarPerfil = document.getElementById('form-atualizar-dados-usuario');
     const listaMangas = document.getElementById('lista-mangas');
     const overlay = document.getElementById('overlay');
     const botaoFecharFormulario = document.getElementById('fechar');
-    const botaoFecharAtualizarFormulario = document.getElementById('fechar-atualizar-form');
+    const botaoFecharEditarUsuario = document.getElementById('fechar-editar-usuario-form');
     const botaoAdicionarManga = document.getElementById('btn-adicionar');
     const botaoAbrirMenu = document.getElementById('btn-abrir-menu');
     const botaoSair = document.getElementById('btn-sair-usuario');
-    const nomeUsuario = document.getElementById('nome-usuario');
-    const imgLoading = document.getElementById('carregamento');
-    const textoBotao = document.getElementById('texto-botao');
+    const nomeUsuarioExibido = document.getElementById('nome-usuario');
     const menuLateral = document.getElementById('menu-lateral');
     const barraNavegacao = document.getElementById('barra-de-navegacao');
     const imagemUsuario = document.getElementById('imagem-usuario');
+    const botaoAbrirEditarPerfil = document.getElementById('abrir-editar-perfil');
+    const botaoRedefinirPerfil = document.getElementById('redefinir-perfil');
     let usuarioGlobal;
     let aux = true;
     let auxMenu = true;
+    let auxEditarUsuario = true;
 
-    //Aqui está cuidando de tudo relacionado a usuario
+    class Usuario{
+        constructor(nomeUsuario, fotoUsuario){
+            this.nomeUsuario = nomeUsuario;
+            this.fotoUsuario = fotoUsuario;
+        }
+
+        getNomeUsuario(){
+            return this.nomeUsuario;
+        }
+
+        getFotoUsuario(){
+            return this.fotoUsuario;
+        }
+
+        setNomeUsuario(novoNomeUsuario){
+            this.nomeUsuario = novoNomeUsuario;
+        }
+
+        setFotoUsuario(novaFotoUsuario){
+            this.fotoUsuario = novaFotoUsuario;
+        }
+    }
+
+    //Aqui está cuidando de tudo relacionado a usuário
     onAuthStateChanged(auth, (user) => {
         if (user) {
             usuarioGlobal = user;
-            exibirListaMangas(user.uid);
             const displayName = user.displayName || user.email;
-            nomeUsuario.textContent = ' Bem-vindo, ' + displayName;
             const photoURL = user.photoURL || '../images/usuario.png';
-            imagemUsuario.src = photoURL;
+            const usuario = new Usuario(displayName, photoURL);
+
+            nomeUsuarioExibido.textContent = ' Bem-vindo(a), ' + usuario.getNomeUsuario();
+            imagemUsuario.src = usuario.getFotoUsuario();
+            exibirListaMangas(user.uid);
+            
         } else {
-            nomeUsuario.textContent = "Usuário não autenticado";
+            nomeUsuarioExibido.textContent = "Usuário não autenticado";
         }
     });
 
@@ -125,11 +153,44 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
         
     };
 
+    class MangaFavorito extends Manga{
+        constructor(titulo, autor, ultimoCapituloLido, linkImagem, genero, status, categoria, dataAdicao){
+            super(titulo, autor, ultimoCapituloLido, linkImagem, genero, status, categoria);
+            this.dataAdicao = dataAdicao;
+        }
+
+        getDataAdicao(){
+            return this.dataAdicao;
+        }
+
+        setDataAdicao(novaDataAdicao){
+            this.dataAdicao = novaDataAdicao;
+        }
+    };
+
+    botaoAbrirEditarPerfil.addEventListener('click', () => {
+        if(auxEditarUsuario){
+            formEditarPerfil.style.display = 'flex';
+            overlay.style.display = 'flex';
+        } else {
+            formEditarPerfil.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+        auxEditarUsuario = !auxEditarUsuario;
+        
+    });
+
+    botaoFecharEditarUsuario.addEventListener('click', () => {
+        formEditarPerfil.style.display = 'none';
+        overlay.style.display = 'none';
+        auxEditarUsuario =! auxEditarUsuario;
+    });
+
     botaoFecharFormulario.addEventListener('click', () => {
         formManga.style.display = 'none';
         overlay.style.display = 'none';
         abrirFormularioAux =! abrirFormularioAux;
-    })
+    });
 
     botaoSair.addEventListener('click', () => {
         signOut(auth);
@@ -154,6 +215,17 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
         }
         auxMenu =!auxMenu;
         
+    });
+
+    botaoRedefinirPerfil.addEventListener('click', async () => {
+        await updateProfile(auth.currentUser, {
+            displayName: usuarioGlobal.email,
+            photoURL: '../images/usuario.png'
+        });
+        formEditarPerfil.style.display = 'none';
+        overlay.style.display = 'none';
+        auxEditarUsuario =! auxEditarUsuario;
+        window.location.reload();
     });
 
     function configurarBotao(button, nome){
@@ -254,12 +326,6 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
                         formAtualizarManga.style.display = 'flex';
                         overlay.style.display = 'flex';
                     }
-                    
-                    botaoFecharAtualizarFormulario.addEventListener('click', () => {
-                        formAtualizarManga.style.display = 'none';
-                        overlay.style.display = 'none';
-                        aux =! aux
-                    });
 
                     try{
                         formAtualizarManga.addEventListener('submit', async (event) => {
@@ -292,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
                     try{
                         const caminho = doc(db, 'usuarios', userId, 'mangas', documento.id);
                         await deleteDoc(caminho);
-                        chamarPopUpAviso('Excluido', 'green');
+                        chamarPopUpAviso('Excluído', 'green');
                         exibirListaMangas(userId);
                     } catch(error){
                         console.error('Error', error.message);
@@ -315,6 +381,45 @@ document.addEventListener('DOMContentLoaded', () => { //DOMContentLoaded para de
         });
         
     };
+
+    formEditarPerfil.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const nomeUsuario = document.getElementById('campo-nome-usuario').value;
+        const fotoUsuario = document.getElementById('campo-foto-usuario').value;
+
+        try{
+            if(fotoUsuario === '' && nomeUsuario === ''){ //Se os dois estão vazios
+                await updateProfile(auth.currentUser, {
+                    displayName: usuarioGlobal.displayName || usuarioGlobal.email, 
+                    photoURL: usuarioGlobal.photoURL || '../images/usuario.png'
+                });
+            } else if(fotoUsuario !== '' && nomeUsuario === ''){ //Se o nome de usuario estiver vazio
+                await updateProfile(auth.currentUser, {
+                    displayName: usuarioGlobal.displayName || usuarioGlobal.email, 
+                    photoURL: fotoUsuario
+                });
+            } else if(fotoUsuario === '' && nomeUsuario !== ''){ //Se a foto estiver vazia
+                await updateProfile(auth.currentUser, {
+                    displayName: nomeUsuario,
+                    photoURL: usuarioGlobal.photoURL || '../images/usuario.png'
+                });
+            } else if(fotoUsuario !== '' && nomeUsuario !== ''){ //Se os dois estão cheios
+                await updateProfile(auth.currentUser, {
+                    displayName: nomeUsuario,
+                    photoURL: fotoUsuario
+                });
+            }
+            
+            chamarPopUpAviso('Atualizado', 'green');
+            formEditarPerfil.style.display = 'none';
+            auxEditarUsuario = !auxEditarUsuario;
+            window.location.reload();
+        } catch(error){
+            console.error('Error' , error.message);
+            chamarPopUpAviso(error.message, 'red');
+        }
+    });
 
 
     formManga.addEventListener('submit', async (event) => {
